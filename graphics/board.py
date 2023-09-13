@@ -14,16 +14,20 @@ class Board():
 
     def __str__(self) -> str:
         board_str = "╒"
-        board_str += "═╤" * self.COL
+        board_str += "═══╤" * self.COL
         board_str = board_str[:-1] + "╕\n"
-        seperate = "╞" + "═╪" * self.COL
+        seperate = "╞" + "═══╪" * self.COL
         seperate = seperate[:-1] + "╡\n"
         for i in range(self.ROW):
             row = "│"
             for j in range(self.COL):
-                row += str(self.board[i][j]) + "│"
-            board_str += row    
+                row += " " + self.board[i][j].value + " │"
+            board_str += row + "\n"
             board_str += seperate
+        end = "╘"
+        end += "═══╧" * self.COL
+        end = end[:-1] + "╛"
+        board_str = board_str[:-62] + end
         return board_str
 
 
