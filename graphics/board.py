@@ -14,11 +14,9 @@ class Board():
 
     def __str__(self) -> str:
         board_str = "  ┌" + "───┬" * (self.COL - 1) + "───┐\n"
-        seperate = "  ├" + "───┼" * (self.COL - 1) + "───┤\n"
 
         for i in range(self.ROW):
             num_of_row = 15 - i
-            
             row = str(num_of_row) + "│" if num_of_row >= 10 else " " + str(num_of_row) + "│"
 
             for j in range(self.COL):
@@ -26,10 +24,11 @@ class Board():
             board_str += row + "\n"
 
             if i < self.ROW - 1:
-                board_str += seperate
+                board_str += "  ├" + "───┼" * (self.COL - 1) + "───┤\n"
 
         board_str += "  └" + "───┴" * (self.COL - 1) + "───┘\n"
         board_str += "    " + "   ".join(chr(ord('A') + i) for i in range(self.COL))
+
         return board_str
 
 
