@@ -36,12 +36,20 @@ class Board():
             col = int(ord(input[0]) - ord('A'))
             row = int(input[1:3]) - 1
         except ValueError:
+            print("Координаты записаны неверно")
             return -1
         
         if (not -1 < col < self.COL or not -1 < row < self.ROW):
+            print("Координаты записаны неверно")
             return -1
+        
         if symbol not in [Cell.CROSS, Cell.CIRCLE, Cell.EMPTY]:
-            return -1
+            print("Ошибка с определением символа")
+            return -2
+        
+        if self.board[14-row][col] != Cell.EMPTY:
+            print("Клетка уже занята")
+            return -3
         
         self.board[14-row][col] = symbol
         return 0
