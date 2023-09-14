@@ -34,7 +34,7 @@ class Board():
     def add_move(self, input, symbol) -> int:
         try:
             col = int(ord(input[0]) - ord('A'))
-            row = int(input[1:2]) - 1
+            row = int(input[1:3]) - 1
         except ValueError:
             return -1
         
@@ -53,6 +53,10 @@ if __name__ == "__main__":
     board.add_move("G7", Cell.CROSS)
     board.add_move("H5", Cell.CIRCLE)
     board.add_move("A5", Cell.CROSS)
+    board.add_move("O15", Cell.CIRCLE)
+    board.add_move("A1", Cell.CROSS)
+    board.add_move("A15", Cell.CIRCLE)
+    board.add_move("O1", Cell.CROSS)
 
     board.add_move("!!", Cell.CIRCLE)
 
