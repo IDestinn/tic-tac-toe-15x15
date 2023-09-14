@@ -37,6 +37,7 @@ class Board():
             row = int(input[1:2]) - 1
         except ValueError:
             return -1
+        
         if (not -1 < col < self.COL or not -1 < row < self.ROW):
             return -1
         if symbol not in [Cell.CROSS, Cell.CIRCLE, Cell.EMPTY]:
@@ -49,11 +50,10 @@ class Board():
 if __name__ == "__main__":
     board = Board()
 
-    # Set some cells to be CROSS or CIRCLE for testing
     board.add_move("G7", Cell.CROSS)
     board.add_move("H5", Cell.CIRCLE)
     board.add_move("A5", Cell.CROSS)
-    
+
     board.add_move("!!", Cell.CIRCLE)
 
     print(board)
