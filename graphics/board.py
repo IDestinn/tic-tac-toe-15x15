@@ -31,15 +31,18 @@ class Board():
 
         return board_str
     
-    def add_move(self, input) -> int:
+    def add_move(self, input, symbol) -> int:
         try:
-            col = int(ord(input[0]) - ord('@'))
-            row = int(input[1:2])
+            col = int(ord(input[0]) - ord('A'))
+            row = int(input[1:2]) - 1
         except ValueError:
-            print("Недопустимый ход")
             return -1
-        if (not 0 < col < (self.COL + 1) or not 0 < row < (self.ROW + 1)):
+        if (not -1 < col < self.COL or not -1 < row < self.ROW):
             return -1
+        if symbol not in [Cell.CROSS, Cell.CIRCLE, Cell.EMPTY]:
+            return -1
+        
+        self.board[14-row][col] = symbol
         return 0
 
 
@@ -47,10 +50,10 @@ if __name__ == "__main__":
     board = Board()
 
     # Set some cells to be CROSS or CIRCLE for testing
-    board.board[5][5] = Cell.CROSS
-    board.board[7][7] = Cell.CIRCLE
-
-    print(board.add_move("A5"))
-    print(board.add_move("!!"))
+    board.add_move("G7", Cell.CROSS)
+    board.add_move("H5", Cell.CIRCLE)
+    board.add_move("A5", Cell.CROSS)
+    
+    board.add_move("!!", Cell.CIRCLE)
 
     print(board)
