@@ -12,6 +12,7 @@ def start_playing_with_friend():
             turn = input("Ход " + whats_turn.value + " в ячейку:")
             if main_board.add_move(turn, whats_turn) == 0:
                 break
+        #if main_board.check_win()
         whats_turn = Cell.CIRCLE if whats_turn == Cell.CROSS else Cell.CROSS
     print("Ничья!")
     input("Нажмите ENTER чтобы вернуться в меню")

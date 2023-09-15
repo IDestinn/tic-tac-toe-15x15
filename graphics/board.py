@@ -31,7 +31,7 @@ class Board():
 
         return board_str
     
-    def add_move(self, input, symbol) -> int:
+    def add_move(self, input, player) -> int:
         try:
             col = int(ord(input[0]) - ord('A'))
             row = 15 - int(input[1:3])
@@ -39,11 +39,11 @@ class Board():
             print("Координаты записаны неверно")
             return -1
         
-        if (not -1 < col < self.COL or not -1 < row < self.ROW):
+        if not self.is_valid(row, col):
             print("Координаты записаны неверно")
             return -1
         
-        if symbol not in Cell:
+        if player not in Cell:
             print("Ошибка с определением символа")
             return -2
         
@@ -51,22 +51,42 @@ class Board():
             print("Клетка уже занята")
             return -3
         
-        self.board[row][col] = symbol
+        self.board[row][col] = player
         return 0
     
-    def check_win(self, row, col) -> bool:
-        sides_sum = []
-        for i in range(-1, 2):
-            if row + i < 0 or row + i > 14:
-                continue 
-            for j in range(-1, 2):
-                sum = 0
-                if col + j < 0 or col + j > 14:
-                    sides_sum.append(-1)
-                    continue
-                sides_sum.append(sum)
-        return False
+    def check_win(self, row, col, player) -> bool:
+        # Check for a win after a player's move at (row, col)
 
+        # Check horizontally
+        if self.check_line(row, col, 0, 1, player) + self.check_line(row, col, 0, -1, player) >= 4:
+            return True
+
+        # Check vertically
+        if self.check_line(row, col, 1, 0, player) + self.check_line(row, col, -1, 0, player) >= 4:
+            return True
+
+        # Check diagonally (top-left to bottom-right)
+        if self.check_line(row, col, 1, 1, player) + self.check_line(row, col, -1, -1, player) >= 4:
+            return True
+
+        # Check diagonally (bottom-left to top-right)
+        if self.check_line(row, col, 1, -1, player) + self.check_line(row, col, -1, 1, player) >= 4:
+            return True
+
+        return False
+    
+    def check_line(self, row, col, dr, dc, player):
+        # Helper function to check for a win in a specific direction (dr, dc)
+        count = 0
+        r, c = row, col
+        while self.is_valid(r, c) and self.board[r][c] == player:
+            count += 1
+            r += dr
+            c += dc
+        return count
+
+    def is_valid(self, row, col):
+        return 0 <= row < self.ROW and 0 <= col < self.COL
 
 
 if __name__ == "__main__":
