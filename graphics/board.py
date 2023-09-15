@@ -34,7 +34,7 @@ class Board():
     def add_move(self, input, symbol) -> int:
         try:
             col = int(ord(input[0]) - ord('A'))
-            row = int(input[1:3]) - 1
+            row = 15 - int(input[1:3])
         except ValueError:
             print("Координаты записаны неверно")
             return -1
@@ -43,16 +43,30 @@ class Board():
             print("Координаты записаны неверно")
             return -1
         
-        if symbol not in [Cell.CROSS, Cell.CIRCLE, Cell.EMPTY]:
+        if symbol not in Cell:
             print("Ошибка с определением символа")
             return -2
         
-        if self.board[14-row][col] != Cell.EMPTY:
+        if self.board[row][col] != Cell.EMPTY:
             print("Клетка уже занята")
             return -3
         
-        self.board[14-row][col] = symbol
+        self.board[row][col] = symbol
         return 0
+    
+    def check_win(self, row, col) -> bool:
+        sides_sum = []
+        for i in range(-1, 2):
+            if row + i < 0 or row + i > 14:
+                continue 
+            for j in range(-1, 2):
+                sum = 0
+                if col + j < 0 or col + j > 14:
+                    sides_sum.append(-1)
+                    continue
+                sides_sum.append(sum)
+        return False
+
 
 
 if __name__ == "__main__":
