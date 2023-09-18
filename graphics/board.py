@@ -17,7 +17,7 @@ class Board():
         board_str = "  ┌" + "───┬" * (self.COL - 1) + "───┐\n"
 
         for i in range(self.ROW):
-            num_of_row = 15 - i
+            num_of_row = self.ROW - i
             row = str(num_of_row) + "│" if num_of_row >= 10 else " " + str(num_of_row) + "│"
 
             for j in range(self.COL):
@@ -35,7 +35,7 @@ class Board():
     def add_move(self, input, player) -> int:
         try:
             col = int(ord(input[0]) - ord('A'))
-            row = 15 - int(input[1:3])
+            row = self.ROW - int(input[1:3])
         except ValueError:
             print("Координаты записаны неверно")
             return -1
@@ -58,19 +58,19 @@ class Board():
         return 0
     
     def check_win(self, row, col, player) -> bool:
-        # Check horizontally
+        # Проверяет горизонтальное направление
         if self.check_line(row, col, 0, 1, player) + self.check_line(row, col, 0, -1, player) >= self.NEED_TO_WIN - 1:
             return True
 
-        # Check vertically
+        # Проверяет вертикальное направление
         if self.check_line(row, col, 1, 0, player) + self.check_line(row, col, -1, 0, player) >= self.NEED_TO_WIN - 1:
             return True
 
-        # Check diagonally (top-left to bottom-right)
+        #  Проверяет диагональное направление (с левого-верхнего до правого-нижнего)
         if self.check_line(row, col, 1, 1, player) + self.check_line(row, col, -1, -1, player) >= self.NEED_TO_WIN - 1:
             return True
 
-        # Check diagonally (bottom-left to top-right)
+        # Проверяет диагональное направление (с левого-нижнего до правого-верхнего)
         if self.check_line(row, col, 1, -1, player) + self.check_line(row, col, -1, 1, player) >= self.NEED_TO_WIN - 1:
             return True
 
