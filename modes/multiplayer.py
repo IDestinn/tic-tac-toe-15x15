@@ -10,9 +10,14 @@ def start_playing_with_friend():
         print("Сделайте ход написав координаты. Пример 'H10'")
         while (True):
             turn = input("Ход " + whats_turn.value + " в ячейку:")
-            if main_board.add_move(turn, whats_turn) == 0:
+            result = main_board.add_move(turn, whats_turn)
+            if result == 0 or result == 1:
                 break
-        #if main_board.check_win()
+        if result == 1:
+            print(main_board)
+            break
         whats_turn = CellStatus.CIRCLE if whats_turn == CellStatus.CROSS else CellStatus.CROSS
-    print("Ничья!")
-    input("Нажмите ENTER чтобы вернуться в меню")
+    else:
+        print("Ничья!")
+    print("ПОБЕДИЛА КОМАНДА", whats_turn.value)
+    input("Нажмите ENTER чтобы вернуться в меню ")
