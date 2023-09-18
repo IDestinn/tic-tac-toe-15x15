@@ -11,7 +11,7 @@ class Board():
         self.ROW = row
         self.COL = col
         self.NEED_TO_WIN = need_to_win
-        self.board = [[Cell.EMPTY for i in range(self.COL)] for j in range(self.ROW)]
+        self.board = [[CellStatus.EMPTY for i in range(self.COL)] for j in range(self.ROW)]
 
     def __str__(self) -> str:
         board_str = "  ┌" + "───┬" * (self.COL - 1) + "───┐\n"
