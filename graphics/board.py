@@ -1,6 +1,6 @@
 from enum import Enum
 
-class Cell(Enum):
+class CellStatus(Enum):
     EMPTY = " "
     CROSS = "X"
     CIRCLE = "O"
@@ -10,7 +10,7 @@ class Board():
     def __init__(self) -> None:
         self.ROW = 15
         self.COL = 15
-        self.board = [[Cell.EMPTY for i in range(self.COL)] for j in range(self.ROW)]
+        self.board = [[CellStatus.EMPTY for i in range(self.COL)] for j in range(self.ROW)]
 
     def __str__(self) -> str:
         board_str = "  ┌" + "───┬" * (self.COL - 1) + "───┐\n"
@@ -43,11 +43,11 @@ class Board():
             print("Координаты записаны неверно")
             return -1
         
-        if player not in Cell:
+        if player not in CellStatus:
             print("Ошибка с определением символа")
             return -2
         
-        if self.board[row][col] != Cell.EMPTY:
+        if self.board[row][col] != CellStatus.EMPTY:
             print("Клетка уже занята")
             return -3
         
@@ -92,14 +92,14 @@ class Board():
 if __name__ == "__main__":
     board = Board()
 
-    board.add_move("G7", Cell.CROSS)
-    board.add_move("H5", Cell.CIRCLE)
-    board.add_move("A5", Cell.CROSS)
-    board.add_move("O15", Cell.CIRCLE)
-    board.add_move("A1", Cell.CROSS)
-    board.add_move("A15", Cell.CIRCLE)
-    board.add_move("O1", Cell.CROSS)
+    board.add_move("G7", CellStatus.CROSS)
+    board.add_move("H5", CellStatus.CIRCLE)
+    board.add_move("A5", CellStatus.CROSS)
+    board.add_move("O15", CellStatus.CIRCLE)
+    board.add_move("A1", CellStatus.CROSS)
+    board.add_move("A15", CellStatus.CIRCLE)
+    board.add_move("O1", CellStatus.CROSS)
 
-    board.add_move("!!", Cell.CIRCLE)
+    board.add_move("!!", CellStatus.CIRCLE)
 
     print(board)
