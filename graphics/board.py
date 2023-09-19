@@ -5,6 +5,11 @@ class CellStatus(Enum):
     CROSS = "X"
     CIRCLE = "O"
 
+class TurnStatus(Enum):
+    ERROR = -1
+    TURN = 0
+    WIN = 1
+
 class Board():
 
     def __init__(self, row=15, col=15, need_to_win=5) -> None:
@@ -32,30 +37,30 @@ class Board():
 
         return board_str
     
-    def add_move(self, input, player) -> int:
+    def add_move(self, input, player) -> TurnStatus:
         try:
             col = int(ord(input[0]) - ord('A'))
             row = self.ROW - int(input[1:3])
         except ValueError:
             print("Координаты записаны неверно")
-            return -1
+            return TurnStatus.ERROR
         
         if not self.is_valid(row, col):
             print("Координаты записаны неверно")
-            return -1
+            return TurnStatus.ERROR
         
         if player not in CellStatus:
             print("Ошибка с определением символа")
-            return -2
+            return TurnStatus.ERROR
         
         if self.board[row][col] != CellStatus.EMPTY:
             print("Клетка уже занята")
-            return -3
+            return TurnStatus.ERROR
         
         self.board[row][col] = player
         if self.check_win(row,col, player):
-            return 1
-        return 0
+            return TurnStatus.WIN
+        return TurnStatus.TURN
     
     def check_win(self, row, col, player) -> bool:
         # Проверяет горизонтальное направление

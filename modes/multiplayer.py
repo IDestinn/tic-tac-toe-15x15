@@ -16,10 +16,10 @@ def start_playing_with_friend():
         while (True):
             turn = input("Ход " + whats_turn.value + " в ячейку:")
             result = main_board.add_move(turn, whats_turn)
-            if result >= 0:
+            if result != TurnStatus.ERROR:
                 break
 
-        if result == 1:
+        if result == TurnStatus.WIN:
             print(main_board)
             break
 
