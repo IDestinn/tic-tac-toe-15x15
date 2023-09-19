@@ -1,19 +1,28 @@
-from graphics.menu import *
+import pyfiglet
+import inquirer
+
 from modes.multiplayer import *
 from modes.solo import *
 from modes.trainmode import *
+from modes.custom import *
+
 
 while True:
-    display_start_menu()
-    choice = input("Выбирите режим: ")
+    print(pyfiglet.figlet_format("15x15"))
 
-    if choice == "1":
+    answer = inquirer.list_input("Выбирите режим", 
+                                 choices = ["Игра с ботом", "Играть с другом", 
+                                            "Режим тестирования ИИ", "Своя игра", "Выход"])
+
+    if answer == "Игра с ботом":
         start_game_with_bot()
-    elif choice == "2":
+    elif answer == "Играть с другом":
         start_playing_with_friend()
-    elif choice == "3":
+    elif answer == "Режим тестирования ИИ":
         start_training_bots()
-    elif choice == "4":
+    elif answer == "Своя игра":
+        custom_game()
+    elif answer == "Выход":
         print("Вы вышли из игры. Увидемся!")
         break
     else:

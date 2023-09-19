@@ -1,5 +1,8 @@
+import pyfiglet
+import inquirer
+
 def display_start_menu():
-    print("Крестики-Нолики 15x15!")
+    
     print("Выбирете режим:")
     print("1. Игра с ботом")
     print("2. Играть с другом")
