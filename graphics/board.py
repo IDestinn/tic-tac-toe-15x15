@@ -37,17 +37,36 @@ class Board():
 
         return board_str
     
-    def add_move(self, input, player) -> TurnStatus:
+    def is_valid(self, input) -> bool:
+        if not (2 <= len(input) <= 3):
+            return False
+
+        col_str = input[0]
+        row_str = input[1:]
+
+        if not 'A' <= col_str.upper() <= chr(ord('A') + self.COL - 1):
+            return False
+
         try:
-            col = int(ord(input[0]) - ord('A'))
-            row = self.ROW - int(input[1:3])
+            row = int(row_str)
+            if not 1 <= row <= self.ROW:
+                return False
         except ValueError:
+            return False
+        
+        return True
+
+    def convert_coordinates(self, input):
+        col = int(ord(input[0].upper()) - ord('A'))
+        row = self.ROW - int(input[1:])
+        return col, row
+    
+    def add_move(self, input, player) -> TurnStatus:
+        if not self.is_valid(input):
             print("Координаты записаны неверно")
             return TurnStatus.ERROR
         
-        if not self.is_valid(row, col):
-            print("Координаты записаны неверно")
-            return TurnStatus.ERROR
+        col, row =  self.convert_coordinates(input)
         
         if player not in CellStatus:
             print("Ошибка с определением символа")
@@ -84,13 +103,13 @@ class Board():
     def check_line(self, row, col, dr, dc, player):
         count = 0
         row, col = row + dr, col + dc
-        while self.is_valid(row, col) and self.board[row][col] == player:
+        while self.in_field(row, col) and self.board[row][col] == player:
             count += 1
             row += dr
             col += dc
         return count
-
-    def is_valid(self, row, col):
+    
+    def in_field(self, row, col):
         return 0 <= row < self.ROW and 0 <= col < self.COL
 
 
