@@ -6,13 +6,12 @@ from modes.solo import *
 from modes.trainmode import *
 from modes.custom import *
 
-
 while True:
     print(pyfiglet.figlet_format("15x15"))
 
-    answer = inquirer.list_input("Выбирите режим", 
-                                 choices = ["Игра с ботом", "Играть с другом", 
-                                            "Режим тестирования ИИ", "Своя игра", "Выход"])
+    answer = inquirer.list_input("Выберите режим",
+                                 choices=["Игра с ботом", "Играть с другом",
+                                          "Режим тестирования ИИ", "Своя игра", "Выход"])
 
     if answer == "Игра с ботом":
         start_game_with_bot()
@@ -23,7 +22,7 @@ while True:
     elif answer == "Своя игра":
         custom_game()
     elif answer == "Выход":
-        print("Вы вышли из игры. Увидемся!")
+        print("Вы вышли из игры. До встречи!")
         break
     else:
-        print("Неверный ввод. Пожалуйста выбирите один из доступных вариантов.")
+        print("Неверный ввод. Пожалуйста выберите один из доступных вариантов.")

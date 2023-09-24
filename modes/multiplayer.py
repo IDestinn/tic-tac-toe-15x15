@@ -1,5 +1,6 @@
 from graphics.board import *
 
+
 def start_playing_with_friend():
     print("Начинается игра с другом...")
 
@@ -13,7 +14,7 @@ def start_playing_with_friend():
         print("Ход " + whats_turn.value)
         print("Сделайте ход написав координаты. Пример 'H10'")
 
-        while (True):
+        while True:
             turn = input("Ход " + whats_turn.value + " в ячейку:")
             result = main_board.add_move(turn, whats_turn)
             if result != TurnStatus.ERROR:
