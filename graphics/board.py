@@ -59,7 +59,7 @@ class Board:
 
         return True
 
-    def convert_coordinates(self, player_input):
+    def convert_coordinates(self, player_input) -> [int, int]:
         col = int(ord(player_input[0].upper()) - ord('A'))
         row = self.ROW - int(player_input[1:])
         return col, row
@@ -103,7 +103,7 @@ class Board:
 
         return False
 
-    def check_line(self, row, col, dr, dc, player):
+    def check_line(self, row, col, dr, dc, player) -> int:
         count = 0
         row, col = row + dr, col + dc
         while self.in_field(row, col) and self.board[row][col] == player:
@@ -112,7 +112,7 @@ class Board:
             col += dc
         return count
 
-    def in_field(self, row, col):
+    def in_field(self, row, col) -> bool:
         return 0 <= row < self.ROW and 0 <= col < self.COL
 
 
