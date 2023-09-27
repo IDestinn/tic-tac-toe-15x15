@@ -1,4 +1,4 @@
-from graphics.board import Board, CellStatus, TurnStatus
+from graphics.board import *
 
 
 def calculate_best_move(board, player):
