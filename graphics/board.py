@@ -6,13 +6,6 @@ class CellStatus(Enum):
     CROSS = "X"
     CIRCLE = "O"
 
-
-class TurnStatus(Enum):
-    ERROR = -1
-    TURN = 0
-    WIN = 1
-
-
 class Board:
 
     def __init__(self, row=15, col=15, need_to_win=5) -> None:
@@ -20,6 +13,7 @@ class Board:
         self.COL = col
         self.NEED_TO_WIN = need_to_win
         self.board = [[CellStatus.EMPTY for _ in range(self.COL)] for _ in range(self.ROW)]
+        self.game_result = None
 
     def __str__(self) -> str:
         board_str = "  ┌" + "───┬" * (self.COL - 1) + "───┐\n"
@@ -39,6 +33,9 @@ class Board:
         board_str += "    " + "   ".join(chr(ord('A') + i) for i in range(self.COL))
 
         return board_str
+    
+    def get_valid_moves(self):
+        return [(i, j) for i, inner_array in enumerate(self.board) for j, element in enumerate(inner_array) if element == CellStatus.EMPTY]
 
     def is_valid(self, player_input) -> bool:
         if not (2 <= len(player_input) <= 3):
@@ -64,41 +61,43 @@ class Board:
         row = self.ROW - int(player_input[1:])
         return col, row
 
-    def add_move(self, player_input, player) -> TurnStatus:
+    def add_move(self, player_input, player) -> bool:
         if not self.is_valid(player_input):
             print("Координаты записаны неверно")
-            return TurnStatus.ERROR
+            return False
 
         col, row = self.convert_coordinates(player_input)
 
         if player not in CellStatus:
             print("Ошибка с определением символа")
-            return TurnStatus.ERROR
+            return False
 
         if self.board[row][col] != CellStatus.EMPTY:
             print("Клетка уже занята")
-            return TurnStatus.ERROR
+            return False
 
         self.board[row][col] = player
-        if self.check_win(row, col, player):
-            return TurnStatus.WIN
-        return TurnStatus.TURN
+        return True
 
     def check_win(self, row, col, player) -> bool:
         # Проверяет горизонтальное направление
         if self.check_line(row, col, 0, 1, player) + self.check_line(row, col, 0, -1, player) >= self.NEED_TO_WIN - 1:
+            self.game_result = player
             return True
 
         # Проверяет вертикальное направление
         if self.check_line(row, col, 1, 0, player) + self.check_line(row, col, -1, 0, player) >= self.NEED_TO_WIN - 1:
+            self.game_result = player
             return True
 
         #  Проверяет диагональное направление (с левого-верхнего до правого-нижнего)
         if self.check_line(row, col, 1, 1, player) + self.check_line(row, col, -1, -1, player) >= self.NEED_TO_WIN - 1:
+            self.game_result = player
             return True
 
         # Проверяет диагональное направление (с левого-нижнего до правого-верхнего)
         if self.check_line(row, col, 1, -1, player) + self.check_line(row, col, -1, 1, player) >= self.NEED_TO_WIN - 1:
+            self.game_result = player
             return True
 
         return False
@@ -127,6 +126,7 @@ if __name__ == "__main__":
     board.add_move("A15", CellStatus.CIRCLE)
     board.add_move("O1", CellStatus.CROSS)
 
+    print(board.get_valid_moves())
     board.add_move("!!", CellStatus.CIRCLE)
 
     print(board)

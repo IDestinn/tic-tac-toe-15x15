@@ -2,8 +2,6 @@ from graphics.board import *
 
 
 def start_playing_with_friend():
-    print("Начинается игра с другом...")
-
     main_board = Board()
 
     whats_turn = CellStatus.CROSS
@@ -15,12 +13,11 @@ def start_playing_with_friend():
         print("Сделайте ход написав координаты. Пример 'H10'")
 
         while True:
-            turn = input("Ход " + whats_turn.value + " в ячейку:")
-            result = main_board.add_move(turn, whats_turn)
-            if result != TurnStatus.ERROR:
+            turn = main_board.convert_coordinates(input("Ход " + whats_turn.value + " в ячейку:"))
+            if main_board.add_move(turn, whats_turn):
                 break
 
-        if result == TurnStatus.WIN:
+        if main_board.check_win():
             print(main_board)
             break
 
@@ -28,5 +25,5 @@ def start_playing_with_friend():
     else:
         print("Ничья!")
 
-    print("ПОБЕДИЛА КОМАНДА", whats_turn.value)
+    print("ПОБЕДИЛА КОМАНДА", main_board.game_result.value())
     input("Нажмите ENTER чтобы вернуться в меню ")
