@@ -1,4 +1,4 @@
-from graphics.board import Board, CellStatus, TurnStatus
+from graphics.board import *
 
 
 def calculate_best_move(board, player):
@@ -98,8 +98,6 @@ def evaluate(board, player):
                 total_score += consecutive_scores.get(consecutive_count, 0)
 
     return total_score
-
-
 
 def get_opponent(player):
     return CellStatus.CIRCLE if player == CellStatus.CROSS else CellStatus.CROSS
