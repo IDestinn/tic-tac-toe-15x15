@@ -14,6 +14,7 @@ class Board:
         self.NEED_TO_WIN = need_to_win
         self.board = [[CellStatus.EMPTY for _ in range(self.COL)] for _ in range(self.ROW)]
         self.game_result = None
+        self.last_move = (None, None, None)
 
     def __str__(self) -> str:
         board_str = "  ┌" + "───┬" * (self.COL - 1) + "───┐\n"
@@ -35,38 +36,41 @@ class Board:
         return board_str
     
     def get_valid_moves(self):
-        return [(i, j) for i, inner_array in enumerate(self.board) for j, element in enumerate(inner_array) if element == CellStatus.EMPTY]
+        return [(i, j) for i, inner_array in enumerate(self.board) for j, 
+                element in enumerate(inner_array) if element == CellStatus.EMPTY]
 
-    def is_valid(self, player_input) -> bool:
+    def convert_coord_to_index(self, player_input) -> [int, int]:
+        col = int(ord(player_input[0].upper()) - ord('A'))
+        row = self.ROW - int(player_input[1:])
+        return col, row
+    
+    def convert_index_to_coord(self, row, col) -> str:
+        if 0 <= row < self.ROW and 0 <= col < self.COL:
+            return chr(ord('A') + col) + str(self.ROW - row)
+        return
+
+    def add_player_move(self, player_input, player) -> bool:
         if not (2 <= len(player_input) <= 3):
+            print("Координаты записаны неверно")
             return False
 
         col_str = player_input[0]
         row_str = player_input[1:]
 
         if not 'A' <= col_str.upper() <= chr(ord('A') + self.COL - 1):
+            print("Координаты записаны неверно")
             return False
 
         try:
             row = int(row_str)
             if not 1 <= row <= self.ROW:
+                print("Координаты записаны неверно")
                 return False
         except ValueError:
-            return False
-
-        return True
-
-    def convert_coordinates(self, player_input) -> [int, int]:
-        col = int(ord(player_input[0].upper()) - ord('A'))
-        row = self.ROW - int(player_input[1:])
-        return col, row
-
-    def add_move(self, player_input, player) -> bool:
-        if not self.is_valid(player_input):
             print("Координаты записаны неверно")
             return False
 
-        col, row = self.convert_coordinates(player_input)
+        col, row = self.convert_coord_to_index(player_input)
 
         if player not in CellStatus:
             print("Ошибка с определением символа")
@@ -77,9 +81,20 @@ class Board:
             return False
 
         self.board[row][col] = player
+        self.last_move = (player, row, col)
         return True
+    
+    def add_ai_move(self, row, col, player):
+        self.board[row][col] = player
+        self.last_move = (player, row, col)
 
-    def check_win(self, row, col, player) -> bool:
+    def remove_move(self):
+        self.board[self.last_move[1], self.last_move[2]] = self.last_move[0]
+
+    def check_win(self) -> bool:
+        row = self.last_move[1]
+        col = self.last_move[2]
+        player = self.last_move[0]
         # Проверяет горизонтальное направление
         if self.check_line(row, col, 0, 1, player) + self.check_line(row, col, 0, -1, player) >= self.NEED_TO_WIN - 1:
             self.game_result = player
@@ -102,31 +117,28 @@ class Board:
 
         return False
 
-    def check_line(self, row, col, dr, dc, player) -> int:
+    def check_line(self, row, col, row_directory, column_directory, player) -> int:
         count = 0
-        row, col = row + dr, col + dc
-        while self.in_field(row, col) and self.board[row][col] == player:
+        row, col = row + row_directory, col + column_directory
+        while 0 <= row < self.ROW and 0 <= col < self.COL and self.board[row][col] == player:
             count += 1
-            row += dr
-            col += dc
+            row += row_directory
+            col += column_directory
         return count
-
-    def in_field(self, row, col) -> bool:
-        return 0 <= row < self.ROW and 0 <= col < self.COL
 
 
 if __name__ == "__main__":
     board = Board()
 
-    board.add_move("G7", CellStatus.CROSS)
-    board.add_move("H5", CellStatus.CIRCLE)
-    board.add_move("A5", CellStatus.CROSS)
-    board.add_move("O15", CellStatus.CIRCLE)
-    board.add_move("A1", CellStatus.CROSS)
-    board.add_move("A15", CellStatus.CIRCLE)
-    board.add_move("O1", CellStatus.CROSS)
+    board.add_player_move("G7", CellStatus.CROSS)
+    board.add_player_move("H5", CellStatus.CIRCLE)
+    board.add_player_move("A5", CellStatus.CROSS)
+    board.add_player_move("O15", CellStatus.CIRCLE)
+    board.add_player_move("A1", CellStatus.CROSS)
+    board.add_player_move("A15", CellStatus.CIRCLE)
+    board.add_player_move("O1", CellStatus.CROSS)
+    print(board.convert_index_to_coord(6, 7))
 
-    print(board.get_valid_moves())
-    board.add_move("!!", CellStatus.CIRCLE)
+    board.add_player_move("!!", CellStatus.CIRCLE)
 
     print(board)

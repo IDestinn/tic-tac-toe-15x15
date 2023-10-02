@@ -1,33 +1,43 @@
-from graphics.board import *
+from .multiplayer import *
 
 def custom_game():
-
-    rows = int(input("Введите колличетсво строк: "))
-    cols = int(input("Введите колличество столбцов: "))
-    need_to_win = int(input("Введите колличество символов в ряд необходимое для победы: "))
-
-    main_board = Board(rows, cols, need_to_win)
-
-    whats_turn = CellStatus.CROSS
-
-    for i in range(main_board.ROW * main_board.COL):
-
-        print(main_board)
-        print("Ход " + whats_turn.value)
-        print("Сделайте ход написав координаты. Пример 'H10'")
-
-        while True:
-            turn = input("Ход " + whats_turn.value + " в ячейку:")
-            if main_board.add_move(turn, whats_turn):
+    os.system('cls' if os.name == 'nt' else 'clear')
+    while True:
+        try:
+            rows = int(input("Введите колличетсво строк: "))
+            os.system('cls' if os.name == 'nt' else 'clear')
+            if 0 < rows < 21:
                 break
+            else:
+                print("Запишите число от 1 до 20")
+        except ValueError:
+            print("Запишите число от 1 до 20")
 
-        if main_board.check_win():
-            print(main_board)
-            break
+    os.system('cls' if os.name == 'nt' else 'clear')
+    while True:
+        try:
+            cols = int(input("Введите колличество столбцов: "))
+            os.system('cls' if os.name == 'nt' else 'clear')
+            if 0 < cols < 21:
+                break
+            else:
+                print("Запишите число от 1 до 20")
+        except ValueError:
+            print("Запишите число от 1 до 20")
+    
+    os.system('cls' if os.name == 'nt' else 'clear')
 
-        whats_turn = CellStatus.CIRCLE if whats_turn == CellStatus.CROSS else CellStatus.CROSS
-    else:
-        print("Ничья!")
+    while True:
+        try:
+            need_to_win = int(input("Введите колличество символов в ряд необходимое для победы: "))
+            os.system('cls' if os.name == 'nt' else 'clear')
+            if need_to_win > 0 and need_to_win <= rows or need_to_win <= cols:
+                break
+            else:
+                print("Число должно быть меньше или равно числу рядов или столбцов")
+        except ValueError:
+            print("Запишите число")
 
-    print("ПОБЕДИЛА КОМАНДА", main_board.game_result.value())
-    input("Нажмите ENTER чтобы вернуться в меню ")
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+    start_playing_with_friend(rows, cols, need_to_win)

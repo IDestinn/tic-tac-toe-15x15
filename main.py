@@ -1,5 +1,6 @@
 import pyfiglet
 import inquirer
+import os
 
 from modes.multiplayer import *
 from modes.solo import *
@@ -7,6 +8,7 @@ from modes.trainmode import *
 from modes.custom import *
 
 while True:
+    os.system('cls' if os.name == 'nt' else 'clear')
     print(pyfiglet.figlet_format("15x15"))
 
     answer = inquirer.list_input("Выберите режим",
