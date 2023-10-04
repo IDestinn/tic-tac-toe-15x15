@@ -1,8 +1,6 @@
 import pyfiglet
 import inquirer
-import os
 
-from modes.multiplayer import *
 from modes.solo import *
 from modes.trainmode import *
 from modes.custom import *

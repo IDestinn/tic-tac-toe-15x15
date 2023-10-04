@@ -6,6 +6,7 @@ class CellStatus(Enum):
     CROSS = "X"
     CIRCLE = "O"
 
+
 class Board:
 
     def __init__(self, row=15, col=15, need_to_win=5) -> None:
@@ -34,17 +35,17 @@ class Board:
         board_str += "    " + "   ".join(chr(ord('A') + i) for i in range(self.COL))
 
         return board_str
-    
+
     def get_valid_moves(self):
-        return [(i, j) for i, inner_array in enumerate(self.board) for j, 
-                element in enumerate(inner_array) if element == CellStatus.EMPTY]
+        return [(i, j) for i, inner_array in enumerate(self.board)
+                for j, element in enumerate(inner_array) if element == CellStatus.EMPTY]
 
     def convert_coord_to_index(self, player_input) -> [int, int]:
         col = int(ord(player_input[0].upper()) - ord('A'))
         row = self.ROW - int(player_input[1:])
         return col, row
-    
-    def convert_index_to_coord(self, row, col) -> str:
+
+    def convert_index_to_coord(self, row, col) -> str | None:
         if 0 <= row < self.ROW and 0 <= col < self.COL:
             return chr(ord('A') + col) + str(self.ROW - row)
         return
@@ -83,13 +84,13 @@ class Board:
         self.board[row][col] = player
         self.last_move = (player, row, col)
         return True
-    
+
     def add_ai_move(self, row, col, player):
         self.board[row][col] = player
         self.last_move = (player, row, col)
 
     def remove_move(self):
-        self.board[self.last_move[1], self.last_move[2]] = self.last_move[0]
+        self.board[self.last_move[1]][self.last_move[2]] = self.last_move[0]
 
     def check_win(self) -> bool:
         row = self.last_move[1]
@@ -125,6 +126,9 @@ class Board:
             row += row_directory
             col += column_directory
         return count
+
+    def in_field(self, row, col) -> bool:
+        return 0 <= row < self.ROW and 0 <= col < self.COL
 
 
 if __name__ == "__main__":

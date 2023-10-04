@@ -2,7 +2,8 @@ from graphics.board import *
 import random
 import os
 
-def start_playing_with_friend(rows = 15, cols = 15, need_to_win = 5):
+
+def start_playing_with_friend(rows=15, cols=15, need_to_win=5):
     main_board = Board(rows, cols, need_to_win)
 
     whats_turn = CellStatus.CROSS
@@ -12,7 +13,7 @@ def start_playing_with_friend(rows = 15, cols = 15, need_to_win = 5):
         print(main_board)
         print("Ход " + whats_turn.value)
         random_cell = random.choice(main_board.get_valid_moves())
-        print("Сделайте ход написав координаты. Пример '" + 
+        print("Сделайте ход написав координаты. Пример '" +
               main_board.convert_index_to_coord(random_cell[0], random_cell[1]) + "'")
 
         while True:
@@ -30,6 +31,6 @@ def start_playing_with_friend(rows = 15, cols = 15, need_to_win = 5):
         print(main_board)
         print("Ничья!")
 
-    if main_board.game_result != None:
+    if main_board.game_result is not None:
         print("ПОБЕДИЛА КОМАНДА", main_board.game_result.value)
     input("Нажмите ENTER чтобы вернуться в меню ")
