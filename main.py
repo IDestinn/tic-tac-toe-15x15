@@ -10,14 +10,14 @@ while True:
     print(pyfiglet.figlet_format("15x15"))
 
     answer = inquirer.list_input("Выберите режим",
-                                 choices=["Игра с ботом", "Играть с другом",
-                                          "Режим тестирования ИИ", "Своя игра", "Выход"])
+                                 choices=["C другом", "C ботом",
+                                          "Бот против бота", "Своя игра", "Выход"])
 
-    if answer == "Игра с ботом":
-        start_game_with_bot()
-    elif answer == "Играть с другом":
+    if answer == "C другом":
         start_playing_with_friend()
-    elif answer == "Режим тестирования ИИ":
+    elif answer == "C ботом":
+        start_game_with_bot()
+    elif answer == "Бот против бота":
         start_training_bots()
     elif answer == "Своя игра":
         custom_game()
