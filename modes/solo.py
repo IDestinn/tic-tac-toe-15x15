@@ -1,24 +1,32 @@
 from graphics.board import *
 import random
+import inquirer
 import os
 
 
 def start_game_with_bot(rows=15, cols=15, need_to_win=5):
     main_board = Board(rows, cols, need_to_win)
-
+    player_char = inquirer.list_input("Кто первый ходит?", 
+                                 choices=["Бот", "Игрок"])
+    player_turn = CellStatus.CROSS if player_char == "Игрок" else CellStatus.CIRCLE
     whats_turn = CellStatus.CROSS
 
     for i in range(main_board.ROW * main_board.COL):
         os.system('cls' if os.name == 'nt' else 'clear')
         print(main_board)
-        print("Ход " + whats_turn.value)
-        random_cell = random.choice(main_board.get_valid_moves())
-        print("Сделайте ход написав координаты. Пример '" +
-              main_board.convert_index_to_coord(random_cell[0], random_cell[1]) + "'")
 
-        while True:
-            if main_board.add_player_move(input("Ход " + whats_turn.value + " в ячейку:"), whats_turn):
-                break
+
+        print("Ход " + whats_turn.value)
+        if whats_turn == player_turn:
+            random_cell = random.choice(main_board.get_valid_moves())
+            print("Сделайте ход написав координаты. Пример '" +
+                main_board.convert_index_to_coord(random_cell[0], random_cell[1]) + "'")
+
+            while True:
+                if main_board.add_player_move(input("Ход " + whats_turn.value + " в ячейку:"), whats_turn):
+                    break
+        else:
+            main_board.add_ai_move(whats_turn)
 
         if main_board.check_win():
             os.system('cls' if os.name == 'nt' else 'clear')

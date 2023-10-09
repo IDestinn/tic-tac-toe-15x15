@@ -1,5 +1,5 @@
 from enum import Enum
-
+import random
 
 class CellStatus(Enum):
     EMPTY = " "
@@ -85,9 +85,10 @@ class Board:
         self.last_move = (player, row, col)
         return True
 
-    def add_ai_move(self, row, col, player):
-        self.board[row][col] = player
-        self.last_move = (player, row, col)
+    def add_ai_move(self, player):
+        random_cell = random.choice(self.get_valid_moves())
+        self.board[random_cell[0]][random_cell[1]] = player
+        self.last_move = (player, random_cell[0], random_cell[1])
 
     def remove_move(self):
         self.board[self.last_move[1]][self.last_move[2]] = self.last_move[0]

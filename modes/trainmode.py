@@ -12,7 +12,7 @@ def start_training_bots(rows=15, cols=15, need_to_win=5):
         os.system('cls' if os.name == 'nt' else 'clear')
         print(main_board)
 
-        main_board.add_ai_move()
+        main_board.add_ai_move(whats_turn)
 
         if main_board.check_win():
             os.system('cls' if os.name == 'nt' else 'clear')
