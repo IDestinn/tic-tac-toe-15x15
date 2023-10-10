@@ -1,5 +1,5 @@
 from enum import Enum
-import calculate
+from calculate import calculate_best_move
 import random
 
 class CellStatus(Enum):
@@ -87,7 +87,7 @@ class Board:
         return True
 
     def add_ai_move(self, player):
-        best_move = calculate.calculate_best_move(self, player)
+        best_move = calculate_best_move(self, player)
         self.board[best_move[0]][best_move[1]] = player
         self.last_move = (player, best_move[0], best_move[1])
 

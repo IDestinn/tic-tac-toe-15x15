@@ -1,6 +1,6 @@
 from graphics.board import *
 
-DEPTH = 5
+DEPTH = 10
 
 class CellStatus(Enum):
     EMPTY = " "
@@ -59,13 +59,8 @@ def evaluate(eval_board, maximizing_player):
     # Define a scoring system based on the number of pieces in a row for the player
 
     # Scores for different lengths of consecutive pieces
-    consecutive_scores = {
-        1: 1,  # One piece in a row
-        2: 10,  # Two pieces in a row
-        3: 100,  # Three pieces in a row
-        4: 1000,  # Four pieces in a row
-        5: 10000  # Five pieces in a row (winning condition)
-    }
+    consecutive_scores = {i + 1 : 10**i  for i in range(eval_board.NEED_TO_WIN)}
+
 
     eval_player = CellStatus.CROSS if maximizing_player else CellStatus.CIRCLE
     total_score = 0
