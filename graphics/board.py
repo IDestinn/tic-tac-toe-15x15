@@ -1,4 +1,5 @@
 from enum import Enum
+import calculate
 import random
 
 class CellStatus(Enum):
@@ -86,12 +87,16 @@ class Board:
         return True
 
     def add_ai_move(self, player):
-        random_cell = random.choice(self.get_valid_moves())
-        self.board[random_cell[0]][random_cell[1]] = player
-        self.last_move = (player, random_cell[0], random_cell[1])
+        best_move = calculate.calculate_best_move(self, player)
+        self.board[best_move[0]][best_move[1]] = player
+        self.last_move = (player, best_move[0], best_move[1])
+
+    def add_move(self, row, col, player):
+        self.board[row][col] = player
+        self.last_move = (player, row, col)
 
     def remove_move(self):
-        self.board[self.last_move[1]][self.last_move[2]] = self.last_move[0]
+        self.board[self.last_move[1]][self.last_move[2]] = CellStatus.EMPTY
 
     def check_win(self) -> bool:
         row = self.last_move[1]
