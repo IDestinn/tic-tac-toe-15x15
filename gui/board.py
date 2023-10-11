@@ -1,5 +1,5 @@
 from enum import Enum
-from calc.calculate import calculate_best_move
+from calc import calculate_best_move
 
 
 class CellStatus(Enum):

@@ -1,4 +1,4 @@
-from gui.board import *
+from gui import Board, CellStatus
 import random
 import os
 

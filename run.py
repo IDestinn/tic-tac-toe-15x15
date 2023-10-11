@@ -1,6 +1,8 @@
 import pyfiglet
-
-from gui.custom import *
+import os
+import inquirer
+from gui.custom import custom_game
+from modes import start_game_with_bot, start_training_bots,start_playing_with_friend
 
 while True:
     os.system('cls' if os.name == 'nt' else 'clear')

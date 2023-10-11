@@ -1,4 +1,4 @@
-from gui.board import *
+from gui import Board, CellStatus
 import random
 import inquirer
 import os
@@ -26,7 +26,7 @@ def start_game_with_bot(rows=15, cols=15, need_to_win=5):
                 if main_board.add_player_move(turn, whats_turn):
                     break
             row, col = main_board.convert_coord_to_index(turn)
-            
+
         else:
             ai_move = main_board.add_ai_move(whats_turn)
             row, col = ai_move[0], ai_move[1]

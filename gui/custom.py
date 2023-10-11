@@ -1,8 +1,6 @@
 import os
 import inquirer
-from modes.multiplayer import start_playing_with_friend
-from modes.solo import start_game_with_bot
-from modes.trainmode import start_training_bots
+from modes import start_game_with_bot, start_training_bots, start_playing_with_friend
 
 
 def custom_game():
