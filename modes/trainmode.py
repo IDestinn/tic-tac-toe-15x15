@@ -1,5 +1,4 @@
-from graphics.board import *
-import random
+from gui.board import *
 import os
 
 

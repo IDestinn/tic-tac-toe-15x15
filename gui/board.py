@@ -1,6 +1,6 @@
 from enum import Enum
-from calculate import calculate_best_move
-import random
+from calc.calculate import calculate_best_move
+
 
 class CellStatus(Enum):
     EMPTY = " "
@@ -82,7 +82,6 @@ class Board:
             return False
 
         self.board[row][col] = player
-        self.last_move = (player, row, col)
         return True
 
     def add_ai_move(self, player):

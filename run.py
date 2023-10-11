@@ -1,9 +1,6 @@
 import pyfiglet
-import inquirer
 
-from modes.solo import *
-from modes.trainmode import *
-from modes.custom import *
+from gui.custom import *
 
 while True:
     os.system('cls' if os.name == 'nt' else 'clear')

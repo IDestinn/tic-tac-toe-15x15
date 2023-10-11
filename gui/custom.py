@@ -44,9 +44,9 @@ def custom_game():
             print("Запишите число")
 
     os.system('cls' if os.name == 'nt' else 'clear')
-    
-    mode = inquirer.list_input("Выберите режим", 
-                                 choices=["С другом", "Против бота", "Бот против бота"])
+
+    mode = inquirer.list_input("Выберите режим",
+                               choices=["С другом", "Против бота", "Бот против бота"])
     if mode == "С другом":
         start_playing_with_friend(rows, cols, need_to_win)
     elif mode == "Против бота":
