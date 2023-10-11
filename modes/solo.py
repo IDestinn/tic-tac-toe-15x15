@@ -23,12 +23,16 @@ def start_game_with_bot(rows=15, cols=15, need_to_win=5):
                 main_board.convert_index_to_coord(random_cell[0], random_cell[1]) + "'")
 
             while True:
-                if main_board.add_player_move(input("Ход " + whats_turn.value + " в ячейку:"), whats_turn):
+                turn = input("Ход " + whats_turn.value + " в ячейку:")
+                if main_board.add_player_move(turn, whats_turn):
                     break
+            row, col = main_board.convert_coord_to_index(turn)
+            
         else:
-            main_board.add_ai_move(whats_turn)
+            ai_move = main_board.add_ai_move(whats_turn)
+            row, col = ai_move[0], ai_move[1]
 
-        if main_board.check_win():
+        if main_board.check_win(row, col, whats_turn):
             os.system('cls' if os.name == 'nt' else 'clear')
             print(main_board)
             break

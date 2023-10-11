@@ -13,10 +13,12 @@ class CellStatus(Enum):
 def calculate_best_move(given_board, player_side):
     best_score = -float('inf')
     best_move = None
+    # Выбираем противоположную сторону для хода соперника
+    is_max = False if player_side == CellStatus.CROSS else True
     for row, col in given_board.get_valid_moves():
         given_board.add_move(row, col, player_side)
-        cur_score = minimax(given_board, DEPTH, -float('inf'), float('inf'), False)
-        given_board.remove_move()
+        cur_score = minimax(given_board, DEPTH, -float('inf'), float('inf'), is_max)
+        given_board.remove_move(row, col)
 
         if cur_score > best_score:
             best_score = cur_score
@@ -33,10 +35,10 @@ def minimax(analyzing_board, depth, alpha, beta, maximizing_player):
         best_score = -float('inf')
         for row, col in analyzing_board.get_valid_moves():
             analyzing_board.add_move(row, col, CellStatus.CROSS)
-            analyzing_board.check_win()
+            analyzing_board.check_win(row, col, CellStatus.CROSS)
             score = minimax(analyzing_board, depth - 1, alpha, beta, False)
             alpha = max(alpha, score)
-            analyzing_board.remove_move()
+            analyzing_board.remove_move(row, col)
             best_score = max(score, best_score)
             if beta <= alpha:
                 break
@@ -45,10 +47,10 @@ def minimax(analyzing_board, depth, alpha, beta, maximizing_player):
         best_score = float('inf')
         for row, col in analyzing_board.get_valid_moves():
             analyzing_board.add_move(row, col, CellStatus.CIRCLE)
-            analyzing_board.check_win()
+            analyzing_board.check_win(row, col, CellStatus.CIRCLE)
             score = minimax(analyzing_board, depth - 1, alpha, beta, True)
             beta = min(beta, score)
-            analyzing_board.remove_move()
+            analyzing_board.remove_move(row, col)
             best_score = min(score, best_score)
             if beta <= alpha:
                 break

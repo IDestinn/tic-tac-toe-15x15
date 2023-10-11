@@ -16,7 +16,6 @@ class Board:
         self.NEED_TO_WIN = need_to_win
         self.board = [[CellStatus.EMPTY for _ in range(self.COL)] for _ in range(self.ROW)]
         self.game_result = None
-        self.last_move = (None, None, None)
 
     def __str__(self) -> str:
         board_str = "  ┌" + "───┬" * (self.COL - 1) + "───┐\n"
@@ -44,7 +43,7 @@ class Board:
     def convert_coord_to_index(self, player_input) -> [int, int]:
         col = int(ord(player_input[0].upper()) - ord('A'))
         row = self.ROW - int(player_input[1:])
-        return col, row
+        return row, col
 
     def convert_index_to_coord(self, row, col) -> str | None:
         if 0 <= row < self.ROW and 0 <= col < self.COL:
@@ -89,19 +88,16 @@ class Board:
     def add_ai_move(self, player):
         best_move = calculate_best_move(self, player)
         self.board[best_move[0]][best_move[1]] = player
-        self.last_move = (player, best_move[0], best_move[1])
+        return best_move
 
     def add_move(self, row, col, player):
         self.board[row][col] = player
-        self.last_move = (player, row, col)
 
-    def remove_move(self):
-        self.board[self.last_move[1]][self.last_move[2]] = CellStatus.EMPTY
+    def remove_move(self, row, col):
+        self.board[row][col] = CellStatus.EMPTY
+        self.game_result = None
 
-    def check_win(self) -> bool:
-        row = self.last_move[1]
-        col = self.last_move[2]
-        player = self.last_move[0]
+    def check_win(self, row, col, player) -> bool:
         # Проверяет горизонтальное направление
         if self.check_line(row, col, 0, 1, player) + self.check_line(row, col, 0, -1, player) >= self.NEED_TO_WIN - 1:
             self.game_result = player
