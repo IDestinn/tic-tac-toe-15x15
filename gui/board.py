@@ -1,5 +1,4 @@
 from enum import Enum
-from calc import calculate_best_move
 
 
 class CellStatus(Enum):
@@ -18,7 +17,7 @@ class Board:
         self.game_result = None
 
     def __str__(self) -> str:
-        board_str = "  ┌" + "───┬" * (self.COL - 1) + "───┐\n"
+        board_str = "\n  ┌" + "───┬" * (self.COL - 1) + "───┐\n"
 
         for i in range(self.ROW):
             num_of_row = self.ROW - i
@@ -85,6 +84,7 @@ class Board:
         return True
 
     def add_ai_move(self, player):
+        from calc import calculate_best_move
         best_move = calculate_best_move(self, player)
         self.board[best_move[0]][best_move[1]] = player
         return best_move

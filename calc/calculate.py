@@ -61,4 +61,4 @@ def evaluate(eval_board: Board):
 
 
 if __name__ == "__main__":
-    modes.start_training_bots()
+    modes.start_training_bots(3, 3, 3)
