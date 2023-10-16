@@ -70,7 +70,7 @@ class Board:
             print("Координаты записаны неверно")
             return False
 
-        col, row = self.convert_coord_to_index(player_input)
+        row, col = self.convert_coord_to_index(player_input)
 
         if player not in CellStatus:
             print("Ошибка с определением символа")
