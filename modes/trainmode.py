@@ -1,6 +1,5 @@
 from gui import Board, CellStatus
 import os
-import time
 
 
 def start_training_bots(rows=15, cols=15, need_to_win=5):
@@ -13,7 +12,6 @@ def start_training_bots(rows=15, cols=15, need_to_win=5):
         print(main_board)
 
         ai_move = main_board.add_ai_move(whats_turn)
-        time.sleep(1)
 
         if main_board.check_win(ai_move[0], ai_move[1], whats_turn):
             os.system('cls' if os.name == 'nt' else 'clear')

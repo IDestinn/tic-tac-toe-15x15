@@ -91,6 +91,7 @@ class Board:
 
     def add_move(self, row, col, player):
         self.board[row][col] = player
+        self.check_win(row, col, player)
 
     def remove_move(self, row, col):
         self.board[row][col] = CellStatus.EMPTY
