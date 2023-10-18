@@ -21,14 +21,15 @@ def test(test_board: Board, row = -1, col = -1):
 
             if test_board.check_win(ai_move[0], ai_move[1], whats_turn):
                 game_results["Победа Х"] += 1
-                break
+                return
         else:
-            for (row, col) in test_board.get_valid_moves():
+            for row, col in test_board.get_valid_moves():
                 test(test_board, row, col)
 
         whats_turn = CellStatus.CIRCLE if whats_turn == CellStatus.CROSS else CellStatus.CROSS
     else:
         game_results["Ничья"] += 1
+    return 
 
 test(start_board)
 print(game_results)
