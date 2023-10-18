@@ -1,35 +1,33 @@
 from gui import Board, CellStatus
 
+def test_all_possible_results(board: Board, player_turn: bool, game_results):
+    winner = board.game_result
+    
+    if winner == CellStatus.CROSS:
+        game_results["Победа Х"] += 1
+    elif winner == CellStatus.CIRCLE:
+        game_results["Победа О"] += 1
+    elif winner == None and board.get_valid_moves() == []:
+        game_results["Ничья"] += 1
+    else:
+        for row, col in board.get_valid_moves():
+            if player_turn:
+                board.add_move(row, col, CellStatus.CIRCLE)
+            else:
+                ai_move = board.add_ai_move(CellStatus.CROSS)
+                row, col = ai_move[0], ai_move[1]
+                board.add_move(row, col, CellStatus.CROSS)
+
+            test_all_possible_results(board, not player_turn, game_results)
+
+            board.remove_move(row, col)
+
+# Create the initial board
 start_board = Board(3, 3, 3)
 game_results = {"Ничья": 0, "Победа Х": 0, "Победа О": 0}
 
-whats_turn = CellStatus.CROSS
+# Start the testing with AI playing Cross (X) and player playing Circle (O)
+test_all_possible_results(start_board, False, game_results)
 
-def test(test_board: Board, row = -1, col = -1):
-    global whats_turn
-    global game_results
-    if row != -1 and col != -1:
-        test_board.add_move(row, col, whats_turn)
-        if test_board.check_win(row, col, whats_turn):
-                game_results["Победа О"] += 1
-                return
-        whats_turn = CellStatus.CIRCLE if whats_turn == CellStatus.CROSS else CellStatus.CROSS
-    for i in range(len(test_board.get_valid_moves())):
-        
-        if whats_turn == CellStatus.CROSS:
-            ai_move = test_board.add_ai_move(whats_turn)
-
-            if test_board.check_win(ai_move[0], ai_move[1], whats_turn):
-                game_results["Победа Х"] += 1
-                return
-        else:
-            for row, col in test_board.get_valid_moves():
-                test(test_board, row, col)
-
-        whats_turn = CellStatus.CIRCLE if whats_turn == CellStatus.CROSS else CellStatus.CROSS
-    else:
-        game_results["Ничья"] += 1
-    return 
-
-test(start_board)
+# Print the results
 print(game_results)
