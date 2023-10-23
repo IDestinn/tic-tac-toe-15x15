@@ -8,7 +8,7 @@ fn calculate_best_move(a: usize, b: usize) -> PyResult<String> {
 
 /// A Python module implemented in Rust.
 #[pymodule]
-fn rust(_py: Python, m: &PyModule) -> PyResult<()> {
+fn calc(_py: Python, m: &PyModule) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(calculate_best_move, m)?)?;
     Ok(())
 }
