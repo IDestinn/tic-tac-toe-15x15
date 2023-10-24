@@ -4,7 +4,7 @@ from gui import CellStatus, Board
 # Cross in +inf
 # Circle in -inf
 def calculate_best_move(given_board: Board, player_side: CellStatus):
-    DEPTH = len(given_board.get_valid_moves())
+    DEPTH = len(given_board.get_valid_moves()) if len(given_board.get_valid_moves()) < 10 else 10
     best_score = -float('inf') if player_side == CellStatus.CROSS else float('inf')
     best_move = None
     # Выбираем противоположную сторону для хода соперника
@@ -51,11 +51,12 @@ def minimax(analyzing_board: Board, depth, alpha, beta, maximizing_player):
 
 
 def evaluate(eval_board: Board):
-    if eval_board.game_result == CellStatus.CROSS:
-        return 1
-    if eval_board.game_result == CellStatus.CIRCLE:
-        return -1
-    return 0
+    match eval_board.game_result:
+        case CellStatus.CROSS:
+            return 1
+        case CellStatus.CIRCLE:
+            return -1
+    return 0    
 
 
 if __name__ == "__main__":
