@@ -4,7 +4,7 @@ import inquirer
 import os
 
 
-def start_game_with_bot(rows:int=15, cols:int=15, need_to_win:int=5) -> None:
+def start_game_with_bot(rows:int=3, cols:int=3, need_to_win:int=3) -> None:
     main_board = Board(rows, cols, need_to_win)
     player_char = inquirer.list_input("Кто первый ходит?",
                                       choices=["Бот", "Игрок"])
