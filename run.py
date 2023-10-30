@@ -6,7 +6,7 @@ from modes import start_game_with_bot, start_training_bots, start_playing_with_f
 
 while True:
     os.system('cls' if os.name == 'nt' else 'clear')
-    print(pyfiglet.figlet_format("15x15"))
+    print(pyfiglet.figlet_format("Tic-Tac-Toe"))
 
     answer = inquirer.list_input("Выберите режим",
                                  choices=["C другом", "C ботом",

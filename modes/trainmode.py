@@ -2,7 +2,7 @@ from gui import Board, CellStatus
 import os
 
 
-def start_training_bots(rows=15, cols=15, need_to_win=5):
+def start_training_bots(rows:int=3, cols:int=3, need_to_win:int=3) -> None:
     main_board = Board(rows, cols, need_to_win)
 
     whats_turn = CellStatus.CROSS

@@ -3,7 +3,7 @@ from gui import CellStatus, Board
 
 # Cross in +inf
 # Circle in -inf
-def calculate_best_move(given_board: Board, player_side: CellStatus):
+def calculate_best_move(given_board: Board, player_side: CellStatus) -> (int, int):
     DEPTH = len(given_board.get_valid_moves()) if len(given_board.get_valid_moves()) < 10 else 10
     best_score = -float('inf') if player_side == CellStatus.CROSS else float('inf')
     best_move = None
@@ -22,7 +22,7 @@ def calculate_best_move(given_board: Board, player_side: CellStatus):
     return best_move
 
 
-def minimax(analyzing_board: Board, depth, alpha, beta, maximizing_player):
+def minimax(analyzing_board: Board, depth:int, alpha:int, beta:int, maximizing_player:bool) -> int:
     if depth == 0 or analyzing_board.game_result is not None:
         return evaluate(analyzing_board)
 
@@ -50,7 +50,7 @@ def minimax(analyzing_board: Board, depth, alpha, beta, maximizing_player):
         return best_score
 
 
-def evaluate(eval_board: Board):
+def evaluate(eval_board: Board) -> int:
     match eval_board.game_result:
         case CellStatus.CROSS:
             return 1

@@ -3,7 +3,7 @@ import random
 import os
 
 
-def start_playing_with_friend(rows=15, cols=15, need_to_win=5):
+def start_playing_with_friend(rows:int=15, cols:int=15, need_to_win:int=5) -> None:
     main_board = Board(rows, cols, need_to_win)
 
     whats_turn = CellStatus.CROSS

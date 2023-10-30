@@ -9,7 +9,7 @@ class CellStatus(Enum):
 
 class Board:
 
-    def __init__(self, row=15, col=15, need_to_win=5) -> None:
+    def __init__(self, row:int=15, col:int=15, need_to_win:int=5) -> None:
         self.ROW = row
         self.COL = col
         self.NEED_TO_WIN = need_to_win
@@ -35,21 +35,21 @@ class Board:
 
         return board_str
 
-    def get_valid_moves(self):
+    def get_valid_moves(self) -> [(int, int)]:
         return [(i, j) for i, inner_array in enumerate(self.board)
                 for j, element in enumerate(inner_array) if element == CellStatus.EMPTY]
 
-    def convert_coord_to_index(self, player_input) -> [int, int]:
+    def convert_coord_to_index(self, player_input:str) -> [int, int]:
         col = int(ord(player_input[0].upper()) - ord('A'))
         row = self.ROW - int(player_input[1:])
         return row, col
 
-    def convert_index_to_coord(self, row, col) -> str | None:
+    def convert_index_to_coord(self, row:int, col:int) -> str | None:
         if 0 <= row < self.ROW and 0 <= col < self.COL:
             return chr(ord('A') + col) + str(self.ROW - row)
         return
 
-    def add_player_move(self, player_input, player) -> bool:
+    def add_player_move(self, player_input:str, player:CellStatus) -> bool:
         if not (2 <= len(player_input) <= 3):
             print("Координаты записаны неверно")
             return False
@@ -83,21 +83,21 @@ class Board:
         self.board[row][col] = player
         return True
 
-    def add_ai_move(self, player):
+    def add_ai_move(self, player:CellStatus):
         from calc import calculate_best_move
         best_move = calculate_best_move(self, player)
         self.board[best_move[0]][best_move[1]] = player
         return best_move
 
-    def add_move(self, row, col, player):
+    def add_move(self, row:int, col:int, player:CellStatus) -> None:
         self.board[row][col] = player
         self.check_win(row, col, player)
 
-    def remove_move(self, row, col):
+    def remove_move(self, row:int, col:int) -> None:
         self.board[row][col] = CellStatus.EMPTY
         self.game_result = None
 
-    def check_win(self, row, col, player) -> bool:
+    def check_win(self, row:int, col:int, player:CellStatus) -> bool:
         # Проверяет горизонтальное направление
         if self.check_line(row, col, 0, 1, player) + self.check_line(row, col, 0, -1, player) >= self.NEED_TO_WIN - 1:
             self.game_result = player
@@ -120,7 +120,7 @@ class Board:
 
         return False
 
-    def check_line(self, row, col, row_directory, column_directory, player) -> int:
+    def check_line(self, row:int, col:int, row_directory:int, column_directory:int, player:CellStatus) -> int:
         count = 0
         row, col = row + row_directory, col + column_directory
         while 0 <= row < self.ROW and 0 <= col < self.COL and self.board[row][col] == player:
@@ -129,7 +129,7 @@ class Board:
             col += column_directory
         return count
 
-    def in_field(self, row, col) -> bool:
+    def in_field(self, row:int, col:int) -> bool:
         return 0 <= row < self.ROW and 0 <= col < self.COL
 
 

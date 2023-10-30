@@ -3,7 +3,7 @@ import inquirer
 from modes import start_game_with_bot, start_training_bots, start_playing_with_friend
 
 
-def custom_game():
+def custom_game() -> None:
     os.system('cls' if os.name == 'nt' else 'clear')
     while True:
         try:

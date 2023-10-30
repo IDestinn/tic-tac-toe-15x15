@@ -1,6 +1,6 @@
 from gui import Board, CellStatus
 
-def test_all_possible_results(board: Board, player_turn: bool, game_results):
+def test_all_possible_results(board: Board, player_turn: bool, game_results:dict) -> None:
     winner = board.game_result
     
     if winner == CellStatus.CROSS:
