@@ -1,5 +1,5 @@
-from gui import Board, CellStatus
 import os
+from gui import Board, CellStatus
 
 
 def start_training_bots(rows:int=3, cols:int=3, need_to_win:int=3) -> None:
@@ -7,7 +7,7 @@ def start_training_bots(rows:int=3, cols:int=3, need_to_win:int=3) -> None:
 
     whats_turn = CellStatus.CROSS
 
-    for i in range(main_board.ROW * main_board.COL):
+    for i in range(main_board.row * main_board.col):
         os.system('cls' if os.name == 'nt' else 'clear')
         print(main_board)
 

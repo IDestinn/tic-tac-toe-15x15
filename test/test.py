@@ -1,13 +1,14 @@
 from gui import Board, CellStatus
 
-def test_all_possible_results(board: Board, player_turn: bool, game_results:dict) -> None:
+
+def test_all_possible_results(board: Board, player_turn: bool, game_results: dict) -> None:
     winner = board.game_result
-    
+
     if winner == CellStatus.CROSS:
         game_results["Победа Х"] += 1
     elif winner == CellStatus.CIRCLE:
         game_results["Победа О"] += 1
-    elif winner == None and board.get_valid_moves() == []:
+    elif winner is None and board.get_valid_moves() == []:
         game_results["Ничья"] += 1
     else:
         for row, col in board.get_valid_moves():
@@ -21,6 +22,7 @@ def test_all_possible_results(board: Board, player_turn: bool, game_results:dict
             test_all_possible_results(board, not player_turn, game_results)
 
             board.remove_move(row, col)
+
 
 # Create the initial board
 start_board = Board(3, 3, 3)

@@ -11,7 +11,7 @@ def start_game_with_bot(rows:int=3, cols:int=3, need_to_win:int=3) -> None:
     player_turn = CellStatus.CROSS if player_char == "Игрок" else CellStatus.CIRCLE
     whats_turn = CellStatus.CROSS
 
-    for i in range(main_board.ROW * main_board.COL):
+    for i in range(main_board.row * main_board.col):
         os.system('cls' if os.name == 'nt' else 'clear')
         print(main_board)
 
