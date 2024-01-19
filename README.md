@@ -15,6 +15,10 @@
 ```bash
 pip install -r requirements.txt
 ```
+Если у вас также установлен Python2 на устройстве, вместо этого вводите команду ниже:
+```bash
+pip3 install -r requirements.txt
+```
 
 ## Использование
 
@@ -22,7 +26,7 @@ pip install -r requirements.txt
 ```bash
 python run.py
 ```
-Если у вас установлен Python2 на устройстве, вместо этого вводите команду ниже:
+Если у вас также установлен Python2 на устройстве, вместо этого вводите команду ниже:
 ```bash
 python3 run.py
 ```
