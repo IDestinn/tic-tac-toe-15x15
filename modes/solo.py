@@ -1,4 +1,5 @@
 from gui import Board, CellStatus
+from calc.calculate import add_ai_move
 import random
 import inquirer
 import os
@@ -28,7 +29,7 @@ def start_game_with_bot(rows:int=3, cols:int=3, need_to_win:int=3) -> None:
             row, col = main_board.convert_coord_to_index(turn)
 
         else:
-            ai_move = main_board.add_ai_move(whats_turn)
+            ai_move = add_ai_move(main_board, whats_turn)
             row, col = ai_move[0], ai_move[1]
 
         if main_board.check_win(row, col, whats_turn):

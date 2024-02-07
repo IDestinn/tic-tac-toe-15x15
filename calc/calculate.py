@@ -1,4 +1,3 @@
-from modes import start_training_bots
 from gui import CellStatus, Board
 
 
@@ -58,6 +57,7 @@ def evaluate(eval_board: Board) -> int:
             return -1
     return 0
 
-
-if __name__ == "__main__":
-    start_training_bots(3, 3, 3)
+def add_ai_move(Board: Board, player: CellStatus):
+    best_move = calculate_best_move(Board, player)
+    Board.board[best_move[0]][best_move[1]] = player
+    return best_move

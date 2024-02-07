@@ -81,13 +81,7 @@ class Board:
             return False
 
         self.board[row][col] = player
-        return True
-
-    def add_ai_move(self, player: CellStatus):
-        from calc import calculate_best_move
-        best_move = calculate_best_move(self, player)
-        self.board[best_move[0]][best_move[1]] = player
-        return best_move
+        return True  
 
     def add_move(self, row: int, col: int, player: CellStatus) -> None:
         self.board[row][col] = player
